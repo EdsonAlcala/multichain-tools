@@ -9,6 +9,7 @@ export interface UTXO {
   vout: number
   value: number
   script: string
+  scriptType: 'p2pkh' | 'p2wpkh'
 }
 
 interface BtcInputsAndOutputs {

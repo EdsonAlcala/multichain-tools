@@ -342,7 +342,7 @@ export class Bitcoin {
             hash: utxo.txid,
             index: utxo.vout,
             witnessUtxo: {
-              script: transaction.outs[utxo.vout].script,
+              script: Buffer.from(utxo.script, 'hex'),
               value: utxo.value,
             },
           }

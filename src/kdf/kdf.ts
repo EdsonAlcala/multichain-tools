@@ -82,5 +82,15 @@ export const generateBTCAddress = async (
   publicKey: string
 ): Promise<string> => {
   const uncompressedHexPoint = najPublicKeyStrToUncompressedHexPoint(publicKey)
-  return await deriveChildPublicKey(uncompressedHexPoint, signerId, path)
+  const uncompressedChildPublicKey = await deriveChildPublicKey(
+    uncompressedHexPoint,
+    signerId,
+    path
+  )
+
+  const ec = new EC('secp256k1')
+  const keyPair = ec.keyFromPublic(uncompressedChildPublicKey, 'hex')
+  const compressedPublicKey = keyPair.getPublic(true, 'hex')
+
+  return compressedPublicKey
 }

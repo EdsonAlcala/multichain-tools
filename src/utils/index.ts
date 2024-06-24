@@ -143,6 +143,7 @@ export async function fetchBTCUTXOs(
         vout: utxo.vout,
         value: utxo.value,
         script: utxo.script,
+        scriptType: utxo.scriptType || 'p2wpkh',
       }
     })
     return utxos
@@ -225,13 +226,15 @@ export async function fetchDerivedBTCAddressAndPublicKey(
 
   const publicKeyBuffer = Buffer.from(derivedKey, 'hex')
 
-  const { address } = bitcoin.payments.p2pkh({
+  console.log('test 2')
+
+  const { address } = bitcoin.payments.p2wpkh({
     pubkey: publicKeyBuffer,
     network,
   })
 
   if (!address) {
-    throw new Error('Failed to generate Bitcoin address')
+    throw new Error('Failed to generate Bitcoin SegWit address')
   }
 
   return { address, publicKey: publicKeyBuffer }
